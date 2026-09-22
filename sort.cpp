@@ -1,14 +1,16 @@
 #include <stdio.h>
 #include <assert.h>
 
-void print_massive(void* s, size_t size, int len_massive, void (*Func)(const void* value));
-void sort_bubble(void* data, size_t size, int len_s, int (*CompareFunc)(const void* a, const void* b));
-void switch_value(void* value1, void* value2, size_t size);
+#include "my_string.h"
+
+void print_massive(void* s,      size_t size,   int    len_massive, void (*Func)(const void* value));
+void sort_bubble  (void* data,   size_t size,   int    len_s,       int  (*CompareFunc)(const void* a, const void* b));
+void switch_value (void* value1, void*  value2, size_t size);
 
 //comparator for sort
-int Int_Compare_Up(const void* a, const void* b);
-int Int_Compare_Down(const void* a, const void* b);
-int Char_Compare_Up(const void* a, const void* b);
+int Int_Compare_Up   (const void* a, const void* b);
+int Int_Compare_Down (const void* a, const void* b);
+int Char_Compare_Up  (const void* a, const void* b);
 int Char_Compare_Down(const void* a, const void* b);
 
 //comparator for print_massive
@@ -18,17 +20,20 @@ void Print_Char(const void* value);
 int main()
 {
     int int_massive[10] = {3, 5, 1, 8, 2, 6, 9, 7, 4, 0};
-    char char_massive[8] = {'a', 'g', 't', 'e', 'b', '5', '3'};
+    char char_massive[] = {'a', 'g', 't', 'e', 'b', '5', '3', '\0'};
 
-    sort_bubble(int_massive,sizeof(int), 10, Int_Compare_Up);
+    sort_bubble  (int_massive, sizeof(int), 10, Int_Compare_Down);
     print_massive(int_massive, sizeof(int), 10, Print_Int);
 
-    sort_bubble(char_massive,sizeof(char), 8, Char_Compare_Down);
-    print_massive(char_massive, sizeof(char), 8, Print_Char);
+    sort_bubble  (char_massive, sizeof(char), my_strlen(char_massive), Char_Compare_Up);
+    print_massive(char_massive, sizeof(char), my_strlen(char_massive), Print_Char);
 
     return 0;
 }
 
+
+//---------------------------------------------------------------------
+//comparator for print_massive
 void Print_Int(const void* value)
 {
     assert(value != NULL);
@@ -40,6 +45,7 @@ void Print_Char(const void* value)
     assert(value != NULL);
     printf("%c ", *(const char*)value);
 }
+//---------------------------------------------------------------------
 
 void print_massive(void* s, size_t size, int len_massive, void (*Func)(const void* value))
 {
@@ -88,6 +94,9 @@ void switch_value(void* value1, void* value2, size_t size)
     }
 }
 
+
+//---------------------------------------------------------------------
+//comparator for sort
 int Int_Compare_Up(const void* a, const void* b)
 {
     assert(a != NULL);
@@ -96,9 +105,7 @@ int Int_Compare_Up(const void* a, const void* b)
     int x = *(const int*)a;
     int y = *(const int*)b;
 
-    if (x < y) return -1;
-    if (x > y) return  1;
-    return 0;
+    return (x > y);
 }
 
 int Int_Compare_Down(const void* a, const void* b)
@@ -109,9 +116,7 @@ int Int_Compare_Down(const void* a, const void* b)
     int x = *(const int*)a;
     int y = *(const int*)b;
 
-    if (x > y) return -1;
-    if (x < y) return  1;
-    return 0;
+    return (x < y);
 }
 
 int Char_Compare_Up(const void* a, const void* b)
@@ -122,9 +127,7 @@ int Char_Compare_Up(const void* a, const void* b)
     char x = *(const char*)a;
     char y = *(const char*)b;
 
-    if (x < y) return -1;
-    if (x > y) return  1;
-    return 0;
+    return (x > y);
 }
 
 int Char_Compare_Down(const void* a, const void* b)
@@ -135,7 +138,6 @@ int Char_Compare_Down(const void* a, const void* b)
     char x = *(const char*)a;
     char y = *(const char*)b;
 
-    if (x > y) return -1;
-    if (x < y) return  1;
-    return 0;
+    return (x < y);
 }
+//---------------------------------------------------------------------

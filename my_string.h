@@ -1,6 +1,5 @@
-#define STRING
-#ifdef STRING
-
+#ifndef STRING_H
+#define STRING_H
 
 int my_strlen(const char* s);
 void my_puts(const char* s);

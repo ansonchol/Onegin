@@ -1,6 +1,7 @@
 #ifndef STRING_H
 #define STRING_H
 
+void print_massive_string(char** s, int size_x);
 int my_strlen(const char* s);
 void my_puts(const char* s);
 char* my_strcpy(char* s1, const char* s2);

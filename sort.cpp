@@ -2,34 +2,21 @@
 #include <assert.h>
 
 #include "my_string.h"
+#include "sort.h"
 
-void print_massive(void* s,      size_t size,   int    len_massive, void (*Func)(const void* value));
-void sort_bubble  (void* data,   size_t size,   int    len_s,       int  (*CompareFunc)(const void* a, const void* b));
-void switch_value (void* value1, void*  value2, size_t size);
-
-//comparator for sort
-int Int_Compare_Up   (const void* a, const void* b);
-int Int_Compare_Down (const void* a, const void* b);
-int Char_Compare_Up  (const void* a, const void* b);
-int Char_Compare_Down(const void* a, const void* b);
-
-//comparator for print_massive
-void Print_Int(const void* value);
-void Print_Char(const void* value);
-
-int main()
-{
-    int int_massive[10] = {3, 5, 1, 8, 2, 6, 9, 7, 4, 0};
-    char char_massive[] = {'a', 'g', 't', 'e', 'b', '5', '3', '\0'};
-
-    sort_bubble  (int_massive, sizeof(int), 10, Int_Compare_Down);
-    print_massive(int_massive, sizeof(int), 10, Print_Int);
-
-    sort_bubble  (char_massive, sizeof(char), my_strlen(char_massive), Char_Compare_Up);
-    print_massive(char_massive, sizeof(char), my_strlen(char_massive), Print_Char);
-
-    return 0;
-}
+// int main()
+// {
+//     int int_massive[10] = {3, 5, 1, 8, 2, 6, 9, 7, 4, 0};
+//     char char_massive[] = {'a', 'g', 't', 'e', 'b', '5', '3', '\0'};
+//
+//     sort_bubble  (int_massive, sizeof(int), 10, Int_Compare_Up);
+//     print_massive(int_massive, sizeof(int), 10, Print_Int);
+//
+//     sort_bubble  (char_massive, sizeof(char), my_strlen(char_massive), Char_Compare_Down);
+//     print_massive(char_massive, sizeof(char), my_strlen(char_massive), Print_Char);
+//
+//     return 0;
+// }
 
 
 //---------------------------------------------------------------------
@@ -67,7 +54,7 @@ void sort_bubble(void* data, size_t size, int len_s, int (*CompareFunc)(const vo
     assert(CompareFunc != NULL);
 
     unsigned char* data_new = (unsigned char*)data;
-
+//TODO
     for (int n = 0; n < len_s - 1; n++)
         for (int i = 0; i < len_s - 1 - n; i++)
             {
@@ -124,10 +111,10 @@ int Char_Compare_Up(const void* a, const void* b)
     assert(a != NULL);
     assert(b != NULL);
 
-    char x = *(const char*)a;
-    char y = *(const char*)b;
+    const char* x = (const char*)a;
+    const char* y = (const char*)b;
 
-    return (x > y);
+    return my_strcmp(x, y);
 }
 
 int Char_Compare_Down(const void* a, const void* b)
@@ -135,9 +122,32 @@ int Char_Compare_Down(const void* a, const void* b)
     assert(a != NULL);
     assert(b != NULL);
 
-    char x = *(const char*)a;
-    char y = *(const char*)b;
+    const char* x = (const char*)a;
+    const char* y = (const char*)b;
 
-    return (x < y);
+    return my_strcmp(y, x);
+}
+
+
+int CharPtr_Compare_Up(const void* a, const void* b)
+{
+    assert(a != NULL);
+    assert(b != NULL);
+
+    const char* x = *(const char**)a;//const char** - тип a = index, который сам является указателем
+    const char* y = *(const char**)b;//после разыменования получаем адрес строки(или литерала)
+
+    return my_strcmp(x, y);
+}
+
+int CharPtr_Compare_Down(const void* a, const void* b)
+{
+    assert(a != NULL);
+    assert(b != NULL);
+
+    const char* x = *(const char**)a;
+    const char* y = *(const char**)b;
+
+    return my_strcmp(y, x);
 }
 //---------------------------------------------------------------------

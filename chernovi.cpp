@@ -1,6 +1,6 @@
 #define NSTART
-#define TEST_ONEGIN
-#define NTEST_READ
+#define NTEST_ONEGIN
+#define TEST_READ
 
 #ifdef START
 
@@ -44,7 +44,7 @@ int main()
 #include <stdlib.h>
 
 #include "sort.h"
-#include "my_String.h"
+#include "my_string.h"
 
 void print_massive_string(char** s, int size_x);
 /*
@@ -59,7 +59,7 @@ void print_massive_string(char** s, int size_x);
 */
 int main()
 {
-    char a[] = "ABC", v[] = "abc", c[] = "ARB", r[] = "RAT", t[] = "RAB";
+    char a[] = " BAC", v[] = " abc", c[] = "Ras", r[] = "  RAs-40545T", t[] = "RAB";
 
     char** index = (char**)calloc(5, sizeof(char*));
 
@@ -69,7 +69,7 @@ int main()
     index[3] = r;
     index[4] = t;
 
-    sort_bubble (index, sizeof(char*), 5, CharPtr_Compare_Up);
+    sort_bubble(index, sizeof(char*), 5, CharPtr_Compare_Up);
     print_massive_string(index, 5);
 
     free(index);
@@ -82,13 +82,82 @@ int main()
 #endif
 
 #ifdef TEST_READ
+
 #include <stdio.h>
+#include <stdlib.h>
+#include <sys/stat.h>
+
+#include "my_string.h"
+#include "sort.h"
+
+struct stat st;
+
+void print_address_start(char** s, int size);
 
 int main()
 {
+    const char* file_name = "onegin.txt";
+    const char* file_name_edit = "edit_onegin.txt";
+    FILE* file = fopen(file_name, "r"); //исходник
+    FILE* file_edit = fopen(file_name_edit, "w"); //куда записываю
+    if (file == NULL)
+    {
+        printf("Error: file doesn't exist\n");
+        exit(EXIT_FAILURE);
+    }
 
-return 0;
+    stat(file_name, &st);
+
+    char** buffer = (char**)calloc(st.st_size + 1, 1);
+    char* fp = (char*)calloc(st.st_size + 1, 1);
+
+    fread(fp, st.st_size, 1, file);
+    fp[st.st_size] = '\0';
+
+    int count = 1;
+    char* fp_new = fp;
+    //первая строка не читается \n
+    buffer[0] = fp;
+    while (*fp_new != '\0' && *(fp_new + 1) != '\0')
+    {
+        if (*fp_new == '\n')
+        {
+            *fp_new = '\0';
+            if (*(fp_new + 1) != '\0')
+            {
+                buffer[count] = fp_new + 1;
+                count++;
+            }
+        }
+        fp_new++;
+    }
+
+    sort_bubble(buffer, sizeof(char*), count, CharPtr_Compare_Up_straight);
+
+    print_address_start(buffer, count);
+    print_massive_string(buffer, count);
+
+    for (int x = 0; x < st.st_size/sizeof(char*); x++)
+    {
+        fputs(*(buffer + x), file_edit);
+    }
+
+    free(buffer);
+    buffer = NULL;
+
+    fclose(file);
+    fclose(file_edit);
+    return 0;
+}
+
+void print_address_start(char** s, int size)
+{
+    for (int x = 0; x < size; x++)
+    {
+        if(*(s + x) == NULL) {return;}
+        printf("<%c>  address %p\n", **(s + x), *(s + x));
+    }
+    printf("\n");
 }
 #endif
-
 

@@ -1,5 +1,5 @@
-#ifndef SORT
-#define SORT
+#ifndef MY_SORT
+#define MY_SORT
 
 void print_massive(void* s,      size_t size,   int    len_massive, void (*Func)(const void* value));
 void sort_bubble  (void* data,   size_t size,   int    len_s,       int  (*CompareFunc)(const void* a, const void* b));
@@ -10,8 +10,10 @@ int Int_Compare_Up   (const void* a, const void* b);
 int Int_Compare_Down (const void* a, const void* b);
 int Char_Compare_Up  (const void* a, const void* b);
 int Char_Compare_Down(const void* a, const void* b);
-int CharPtr_Compare_Up(const void* a, const void* b);
-int CharPtr_Compare_Down(const void* a, const void* b);
+int CharPtr_Compare_Up_straight(const void* a, const void* b);
+int CharPtr_Compare_Down_straight(const void* a, const void* b);
+int CharPtr_Compare_Up_reverse(const void* a, const void* b);
+int CharPtr_Compare_Down_reverse(const void* a, const void* b);
 
 //comparator for print_massive
 void Print_Int(const void* value);

@@ -54,7 +54,7 @@ void sort_bubble(void* data, size_t size, int len_s, int (*CompareFunc)(const vo
     assert(CompareFunc != NULL);
 
     unsigned char* data_new = (unsigned char*)data;
-//TODO
+
     for (int n = 0; n < len_s - 1; n++)
         for (int i = 0; i < len_s - 1 - n; i++)
             {
@@ -62,7 +62,7 @@ void sort_bubble(void* data, size_t size, int len_s, int (*CompareFunc)(const vo
                 void* b = data_new + (size_t)(i + 1) * size;
                 if (CompareFunc(a, b) > 0)
                     switch_value(a, b, size);
-             }
+            }
 }
 
 void switch_value(void* value1, void* value2, size_t size)
@@ -129,7 +129,7 @@ int Char_Compare_Down(const void* a, const void* b)
 }
 
 
-int CharPtr_Compare_Up(const void* a, const void* b)
+int CharPtr_Compare_Up_straight(const void* a, const void* b)
 {
     assert(a != NULL);
     assert(b != NULL);
@@ -140,7 +140,7 @@ int CharPtr_Compare_Up(const void* a, const void* b)
     return my_strcmp(x, y);
 }
 
-int CharPtr_Compare_Down(const void* a, const void* b)
+int CharPtr_Compare_Down_straight(const void* a, const void* b)
 {
     assert(a != NULL);
     assert(b != NULL);
@@ -149,5 +149,27 @@ int CharPtr_Compare_Down(const void* a, const void* b)
     const char* y = *(const char**)b;
 
     return my_strcmp(y, x);
+}
+
+int CharPtr_Compare_Up_reverse(const void* a, const void* b)
+{
+    assert(a != NULL);
+    assert(b != NULL);
+
+    const char* x = *(const char**)a;//const char** - тип a = index, который сам является указателем
+    const char* y = *(const char**)b;//после разыменования получаем адрес строки(или литерала)
+
+    return my_strcmp_reverse(x, y);
+}
+
+int CharPtr_Compare_Down_reverse(const void* a, const void* b)
+{
+    assert(a != NULL);
+    assert(b != NULL);
+
+    const char* x = *(const char**)a;
+    const char* y = *(const char**)b;
+
+    return my_strcmp_reverse(y, x);
 }
 //---------------------------------------------------------------------

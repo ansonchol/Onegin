@@ -9,7 +9,11 @@ void print_massive_string(char** s, int size_x)
 {
     for (int x = 0; x < size_x; x++)
     {
-        if (*(s + x) == NULL) {return;}
+        if (s + x == NULL)
+        {
+            printf("EXIT in massive\n");
+            return;
+        }
         char* value = *(s+x);
         while(value != NULL && *value != '\0')
         {

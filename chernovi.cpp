@@ -92,8 +92,6 @@ int main()
 
 struct stat st;
 
-void print_address_start(char** s, int size);
-
 int main()
 {
     const char* file_name = "onegin.txt";
@@ -108,8 +106,8 @@ int main()
 
     stat(file_name, &st);
 
-    char** buffer = (char**)calloc(st.st_size + 1, 1);
-    char* fp = (char*)calloc(st.st_size + 1, 1);
+    char** buffer = (char**)calloc(st.st_size + 1, sizeof(char*));
+    char* fp = (char*)calloc(st.st_size + 1, sizeof(char));
 
     fread(fp, st.st_size, 1, file);
     fp[st.st_size] = '\0';
@@ -132,12 +130,11 @@ int main()
         fp_new++;
     }
 
-    sort_bubble(buffer, sizeof(char*), count, CharPtr_Compare_Up_straight);
+    sort_bubble(buffer, sizeof(char*), count, CharPtr_Compare_Down_straight);
 
-    print_address_start(buffer, count);
     print_massive_string(buffer, count);
 
-    for (int x = 0; x < st.st_size/sizeof(char*); x++)
+    for (int x = 0; x < count; x++)
     {
         fputs(*(buffer + x), file_edit);
     }
@@ -150,14 +147,4 @@ int main()
     return 0;
 }
 
-void print_address_start(char** s, int size)
-{
-    for (int x = 0; x < size; x++)
-    {
-        if(*(s + x) == NULL) {return;}
-        printf("<%c>  address %p\n", **(s + x), *(s + x));
-    }
-    printf("\n");
-}
 #endif
-

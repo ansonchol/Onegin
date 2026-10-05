@@ -4,21 +4,6 @@
 #include "my_string.h"
 #include "sort.h"
 
-// int main()
-// {
-//     int int_massive[10] = {3, 5, 1, 8, 2, 6, 9, 7, 4, 0};
-//     char char_massive[] = {'a', 'g', 't', 'e', 'b', '5', '3', '\0'};
-//
-//     sort_bubble  (int_massive, sizeof(int), 10, Int_Compare_Up);
-//     print_massive(int_massive, sizeof(int), 10, Print_Int);
-//
-//     sort_bubble  (char_massive, sizeof(char), my_strlen(char_massive), Char_Compare_Down);
-//     print_massive(char_massive, sizeof(char), my_strlen(char_massive), Print_Char);
-//
-//     return 0;
-// }
-
-
 //---------------------------------------------------------------------
 //comparator for print_massive
 void Print_Int(const void* value)

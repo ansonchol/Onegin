@@ -5,25 +5,25 @@
 
 #include "my_string.h"
 
-void print_massive_string(char** s, int size_x)
-{
-    for (int x = 0; x < size_x; x++)
-    {
-        if (s + x == NULL)
-        {
-            printf("EXIT in massive\n");
-            return;
-        }
-        char* value = *(s+x);
-        while(value != NULL && *value != '\0')
-        {
-            printf("%c", *value);
-            value++;
-        }
-        printf("\n");
-    }
-    printf("\n");
-}
+// void print_massive_string(char** s, int size_x)
+// {
+//     for (int x = 0; x < size_x; x++)
+//     {
+//         if (s + x == NULL)
+//         {
+//             printf("EXIT in massive\n");
+//             return;
+//         }
+//         char* value = *(s+x);
+//         while(value != NULL && *value != '\0')
+//         {
+//             printf("%c", *value);
+//             value++;
+//         }
+//         printf("\n");
+//     }
+//     printf("\n");
+// }
 
 int my_strlen(const char* s)
 {
@@ -115,6 +115,7 @@ int my_strcmp(const char* s1, const char* s2)
 {
     assert(s1 != NULL);
     assert(s2 != NULL);
+
     while (*s1 != '\0' || *s2 != '\0')
     {
         if      (!is_letter(*s1) && *(s1 + 1) != '\0')     {s1++;}

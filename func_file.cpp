@@ -6,17 +6,19 @@
 
 #include "my_string.h"
 #include "sort.h"
-#include "work_file.h"
+#include "func_file.h"
 
 struct stat st;
 
 size_t file_size(const char* file_name)
 {
+    assert(file_name);
+
     stat(file_name, &st);
     return st.st_size;
 }
 
-int move_massive_to_buffer(char* buffer, char** array_string)
+int ParseBufToArr(char* buffer, char** array_string)
 {
     assert(buffer);
     assert(array_string);
@@ -25,7 +27,7 @@ int move_massive_to_buffer(char* buffer, char** array_string)
 
     char* massive_new = buffer;
     array_string[0] = buffer;
-    while (*massive_new != '\0' && *(massive_new + 1) != '\0')
+    while (*(massive_new + 1) != '\0')
     {
         if (*massive_new == '\n')
         {
@@ -41,7 +43,7 @@ int move_massive_to_buffer(char* buffer, char** array_string)
     return line;
 }
 
-int open_file_to_buffer(const char* file_name, char** array_string, size_t size)
+int ParseBuffFromFile(const char* file_name, char** array_string, size_t size)
 {
     assert(file_name);
     assert(array_string);
@@ -64,7 +66,7 @@ int open_file_to_buffer(const char* file_name, char** array_string, size_t size)
     fread(buffer, size, 1, file);
     buffer[size] = '\0';
 
-    int line = move_massive_to_buffer(buffer, array_string);
+    int line = ParseBufToArr(buffer, array_string);
 
     fclose(file);
     printf("SUCCESS -> FILE %s moved into massive_file\n", file_name);
@@ -86,6 +88,7 @@ void write_edit_file(const char* file_edit, char** array_string, int len_arr)
 
     for (int x = 0; x < len_arr; x++)
     {
+        if (**(array_string + x) == '\0'){continue;}
         fputs(*(array_string + x), file);
     }
 

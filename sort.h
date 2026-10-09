@@ -2,7 +2,7 @@
 #define MY_SORT
 
 void print_massive(void* s,      size_t size,   int    len_massive, void (*Func)(const void* value));
-void sort_bubble  (void* data,   size_t size,   int    len_s,       int  (*CompareFunc)(const void* a, const void* b));
+void sort_bubble  (void* data,   int    len_s,  size_t size,        int  (*CompareFunc)(const void* a, const void* b));
 void switch_value (void* value1, void*  value2, size_t size);
 
 //comparator for sort

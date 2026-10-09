@@ -33,7 +33,7 @@ void print_massive(void* s, size_t size, int len_massive, void (*Func)(const voi
     printf(">\n");
 }
 
-void sort_bubble(void* data, size_t size, int len_s, int (*CompareFunc)(const void* a, const void* b))
+void sort_bubble(void* data, int len_s, size_t size, int (*CompareFunc)(const void* a, const void* b))
 {
     assert(data != NULL);
     assert(CompareFunc != NULL);

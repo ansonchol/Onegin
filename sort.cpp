@@ -99,7 +99,7 @@ int Char_Compare_Up(const void* a, const void* b)
     const char* x = (const char*)a;
     const char* y = (const char*)b;
 
-    return my_strcmp(x, y);
+    return my_strcmp_forward(x, y);
 }
 
 int Char_Compare_Down(const void* a, const void* b)
@@ -110,7 +110,7 @@ int Char_Compare_Down(const void* a, const void* b)
     const char* x = (const char*)a;
     const char* y = (const char*)b;
 
-    return my_strcmp(y, x);
+    return my_strcmp_forward(y, x);
 }
 
 
@@ -122,7 +122,7 @@ int CharPtr_Compare_Up_straight(const void* a, const void* b)
     const char* x = *(const char**)a;//const char** - тип a = index, который сам является указателем
     const char* y = *(const char**)b;//после разыменования получаем адрес строки(или литерала)
 
-    return my_strcmp(x, y);
+    return my_strcmp_forward(x, y);
 }
 
 int CharPtr_Compare_Down_straight(const void* a, const void* b)
@@ -133,7 +133,7 @@ int CharPtr_Compare_Down_straight(const void* a, const void* b)
     const char* x = *(const char**)a;
     const char* y = *(const char**)b;
 
-    return my_strcmp(y, x);
+    return my_strcmp_forward(y, x);
 }
 
 int CharPtr_Compare_Up_reverse(const void* a, const void* b)
@@ -144,7 +144,7 @@ int CharPtr_Compare_Up_reverse(const void* a, const void* b)
     const char* x = *(const char**)a;//const char** - тип a = index, который сам является указателем
     const char* y = *(const char**)b;//после разыменования получаем адрес строки(или литерала)
 
-    return my_strcmp_reverse(x, y);
+    return my_strcmp_backward(x, y);
 }
 
 int CharPtr_Compare_Down_reverse(const void* a, const void* b)
@@ -155,6 +155,6 @@ int CharPtr_Compare_Down_reverse(const void* a, const void* b)
     const char* x = *(const char**)a;
     const char* y = *(const char**)b;
 
-    return my_strcmp_reverse(y, x);
+    return my_strcmp_backward(y, x);
 }
 //---------------------------------------------------------------------

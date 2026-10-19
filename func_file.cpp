@@ -21,11 +21,12 @@ size_t get_file_size(const char* file_name)
     return (size_t)st.st_size;
 }
 
-int split_buffer_into_arr_str(char* buffer, char** array_string, int max_lines)
+int split_buffer_into_arr_str(char* buffer, char** array_string, int size_buf)
 {
     assert(buffer);
     assert(array_string);
-    assert(max_lines > 0);
+
+    printf("%d\n", size_buf);
 
     int line = 1;
     char* massive_new = buffer;
@@ -38,9 +39,9 @@ int split_buffer_into_arr_str(char* buffer, char** array_string, int max_lines)
             *massive_new = '\0';
             if (*(massive_new + 1) != '\0')
             {
-                if (line >= max_lines)
+                if (line >= size_buf)
                 {
-                    printf("Warning: too many lines, stopped at %d\n", max_lines);
+                    printf("Warning: too many lines\n");
                     break;
                 }
                 array_string[line] = massive_new + 1;
@@ -52,7 +53,7 @@ int split_buffer_into_arr_str(char* buffer, char** array_string, int max_lines)
     return line;
 }
 
-int read_file_into_buffer(const char* src_file, char** array_string, size_t size, int max_lines)
+int read_file_into_buffer(const char* src_file, char** array_string, size_t size)
 {
     assert(src_file);
     assert(array_string);
@@ -84,12 +85,12 @@ int read_file_into_buffer(const char* src_file, char** array_string, size_t size
         return -1;
     }
 
-    int line = split_buffer_into_arr_str(buffer, array_string, max_lines);
-    printf("SUCCESS -> FILE %s parsed into %d lines\n", src_file, line);
+    int line = split_buffer_into_arr_str(buffer, array_string, (int)read_count);
+    printf("SUCCESS -> FILE %s parsed into buffer\n", src_file);
     return line;
 }
 
-void write_lines_to_file(const char* dst_file, char** array_string, int len_arr,  const char* mode)
+void write_lines_to_file(const char* dst_file, char** array_string, int line, const char* mode)
 {
     assert(dst_file);
     assert(array_string);
@@ -101,7 +102,7 @@ void write_lines_to_file(const char* dst_file, char** array_string, int len_arr,
         return;
     }
 
-    for (int x = 0; x < len_arr; x++)
+    for (int x = 0; x < line; x++)
     {
         if (array_string[x] == NULL || array_string[x][0] == '\0')
         {
